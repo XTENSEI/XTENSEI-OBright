@@ -48,7 +48,7 @@ $CC \
     -O3 \
     -Wall \
     -o "$BIN_DIR/$BIN_NAME" \
-    main.c \
+    Main.c \
     -llog \
     -lm
 

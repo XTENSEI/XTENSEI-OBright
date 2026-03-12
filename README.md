@@ -5,7 +5,7 @@ Why? This one specially made for my device (TECNO LH8n) that still have brightne
 How to use? Add to vendor and add the fs context Like this: 
 
 ```
-/vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:yamada_obright_exec:s0
+/vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:mtk_hal_light_exec:s0
 ```
 
 As for SELinux.cil (vendor/etc/selinux/vendor_selinux.cil)

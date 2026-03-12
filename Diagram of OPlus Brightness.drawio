@@ -1,9 +1,36 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
   <diagram name="Page-1" id="yoeB5wzDS4nIKkl0eOxV">
-    <mxGraphModel dx="1426" dy="976" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="815" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="dL4lOMw5zDBnu7NahARo-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="Yamada OBright&lt;div&gt;Designed By: Kanagawa Yamada&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Inspired By:&amp;nbsp;@ryanistr&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="10" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="This utilize on&lt;div&gt;debug.tracing.screen_brightness&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;It translate to a value that will be written on&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;/sys/class/leds/lcd-backlight/brightness&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Example use (Using Root)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;su -c &#39;echo 4000 &amp;gt; /sys/class/leds/lcd-backlight/brightness&#39;&amp;nbsp;&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="220" x="10" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;" value="&lt;span style=&quot;&quot;&gt;debug.tracing.screen_brightness&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Min Val:&amp;nbsp;222.0&lt;/div&gt;&lt;div&gt;Max Val:&amp;nbsp;8191.0&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;/sys/class/leds/lcd-backlight/brightness&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Min Val (min_brightness: 1)&lt;/div&gt;&lt;div&gt;Max Val (max_hw_brightness: 4095)&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="250" x="240" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" value="&lt;div&gt;&lt;span style=&quot;text-align: right;&quot;&gt;&lt;b&gt;Logic Of Translation value&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;text-align: right;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;debug.tracing.screen_brightness = 222.0 -&amp;gt;&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;/sys/class/leds/lcd-backlight/brightness = 1&lt;/span&gt;&lt;div&gt;debug.tracing.screen_brightness = 8191.0 -&amp;gt;&amp;nbsp;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;/sys/class/leds/lcd-backlight/brightness = 4095&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;And so on (Need to use calculation)&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="510" x="10" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" value="&lt;b&gt;Logic of Yamada OBright&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;NOTE:&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Program will be written on C (And if needed arm64 Assembly will do) and compiled with Android NDK&lt;/div&gt;&lt;div&gt;- DO NOT USE LOOP (While (true)), instead it will use if trigger (Low CPU usage and Instant Reaction)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="300" width="510" x="10" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-12" edge="1" parent="1" source="dL4lOMw5zDBnu7NahARo-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dL4lOMw5zDBnu7NahARo-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;text-align: left;&quot;&gt;debug.tracing.screen_brightness&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-align: left;&quot;&gt;Changed&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="235" x="20" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Write to&lt;div&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); text-align: left; background-color: transparent;&quot;&gt;/sys/class/leds/lcd-backlight/brightness&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="235" x="20" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="dL4lOMw5zDBnu7NahARo-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="Output will consist of:&lt;div&gt;- The Yamada OBright&lt;/div&gt;&lt;div&gt;yamada.obright-V1@3.0-service&lt;/div&gt;&lt;div&gt;- The .rc&amp;nbsp;&lt;/div&gt;&lt;div&gt;init.yamada.obright.rc&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Later will be put on vendor/&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;And the OBright will given fs context to write to brightness&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="240" x="270" y="550" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

@@ -1,2 +1,26 @@
-Source/out/*
+# Build Output
+Source/out/
+out/
+*.o
+*.a
+*.so
+
+# Backup Files
 *.bkp
+*.bak
+*~
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary Files
+*.tmp
+*.temp

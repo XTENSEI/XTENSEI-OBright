@@ -37,41 +37,6 @@
 - 🔥 Comprehensive documentation
 
 ---
-
-## 📱 Supported Devices
-
-### TECNO Devices
-
-| Device | Codename | Display | Max Brightness | Curve | Status |
-|--------|----------|---------|----------------|-------|--------|
-| TECNO Spark 10 Pro | LH8n | IPS | 4095 | Cube Root | ✅ Tested |
-| TECNO Spark 10C | LH9 | IPS | 4095 | Cube Root | ✅ Supported |
-| TECNO Camon 20 | LJ8 | IPS | 4095 | Cube Root | ✅ Supported |
-| TECNO Camon 20 Pro | LJ9 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
-| TECNO Phantom X2 | LK1 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
-| TECNO Phantom X2 Pro | LK2 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
-| TECNO Pova 5 | LM1 | IPS | 4095 | Cube Root | ✅ Supported |
-| TECNO Pova 5 Pro | LM2 | IPS | 4095 | Cube Root | ✅ Supported |
-
-### Infinix Devices
-
-| Device | Codename | Display | Max Brightness | Curve | Status |
-|--------|----------|---------|----------------|-------|--------|
-| Infinix Note 30 | X6833 | IPS | 4095 | Cube Root | ✅ Supported |
-| Infinix Note 30 Pro | X6834 | IPS | 4095 | Gamma 2.2 | ✅ Supported |
-| Infinix Hot 30 | X6831 | IPS | 4095 | Cube Root | ✅ Supported |
-| Infinix Hot 30i | X6832 | IPS | 4095 | Cube Root | ✅ Supported |
-| Infinix Zero Ultra | X6816 | AMOLED | 4095 | Gamma 2.4 | ✅ Supported |
-| Infinix GT 10 Pro | X6820 | AMOLED | 4095 | S-Curve | ✅ Supported |
-
-### iTel Devices
-
-| Device | Codename | Display | Max Brightness | Curve | Status |
-|--------|----------|---------|----------------|-------|--------|
-| itel A70 | A70 | IPS | 2047 | Linear | ✅ Supported |
-| itel S23 | S23 | IPS | 2047 | Linear | ✅ Supported |
-| itel P40 | P40 | IPS | 2047 | Linear | ✅ Supported |
-
 ### Generic Support
 
 Any Transsion device with OPlus-based ROM should work with the generic profile.

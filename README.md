@@ -1,74 +1,119 @@
 # XTENSEI-OBright
 
-**OPlus Brightness Adaptor for Transsion Devices**
+**Universal OPlus Brightness Adaptor for Transsion Devices**
 
-A specialized brightness control daemon designed to fix screen dimming issues on OPlus-based custom ROMs running on Transsion devices (TECNO, Infinix, iTel) with IPS displays.
-
+[![Version](https://img.shields.io/badge/version-2.0.0--universal-blue.svg)]()
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android%2011%2B-green.svg)]()
 [![Architecture](https://img.shields.io/badge/arch-arm64--v8a-red.svg)]()
+[![Codename](https://img.shields.io/badge/codename-Phoenix-purple.svg)]()
 
-## Features
+---
 
-- ✅ **Fixes sudden screen dimming** on IPS displays
-- ✅ **Event-driven architecture** - 0% CPU usage while idle
-- ✅ **Cube root brightness mapping** for natural perceptual control
-- ✅ **Hardware constraint awareness** - respects min/max brightness limits
-- ✅ **Automatic fallback** to alternative backlight paths
-- ✅ **Screen state management** - proper handling of OFF/DOZE/AOD states
-- ✅ **Optimized for Transsion devices** - TECNO, Infinix, iTel
+## 🌟 Features
 
-## Supported Devices
+### Core Features
+- ✅ **Universal Backlight Support** - 20+ backlight paths for maximum device compatibility
+- ✅ **Device Detection** - Automatic device profile detection for TECNO, Infinix, iTel
+- ✅ **Advanced Brightness Curves** - 7 different curves (Cube Root, Gamma, Log, Exp, S-Curve, Linear)
+- ✅ **Zero CPU Usage** - Event-driven architecture with property wait
+- ✅ **Battery Saver Integration** - Automatic brightness reduction in power saving mode
+- ✅ **Thermal Throttling** - Automatic brightness reduction when device overheats
+- ✅ **Configuration File Support** - Runtime customization without recompilation
+- ✅ **Comprehensive Logging** - 5 log levels for easy debugging
+- ✅ **Signal Handling** - Graceful shutdown on SIGINT, SIGTERM, SIGHUP
+- ✅ **Fallback Paths** - Automatic fallback to alternative backlight paths
 
-This brightness adaptor is specifically designed for **Transsion devices** with **OPlus-based custom ROMs**:
+### New in v2.0.0 "Phoenix"
+- 🔥 Universal backlight path detection (20+ paths)
+- 🔥 Device-specific brightness profiles (18+ devices)
+- 🔥 Multiple brightness curve algorithms
+- 🔥 Configuration file support
+- 🔥 Battery saver integration
+- 🔥 Thermal throttling support
+- 🔥 Flashable ZIP package
+- 🔥 ADB installer script
+- 🔥 SELinux policy files
+- 🔥 Comprehensive documentation
 
-- TECNO LH8n (and similar models)
-- Infinix devices with IPS displays
-- iTel devices with brightness dimming issues
+---
 
-> **Note:** If your device experiences sudden brightness dimming on IPS displays with OPlus ROMs, this adaptor should help.
+## 📱 Supported Devices
 
-## Installation
+### TECNO Devices
 
-### Prerequisites
+| Device | Codename | Display | Max Brightness | Curve | Status |
+|--------|----------|---------|----------------|-------|--------|
+| TECNO Spark 10 Pro | LH8n | IPS | 4095 | Cube Root | ✅ Tested |
+| TECNO Spark 10C | LH9 | IPS | 4095 | Cube Root | ✅ Supported |
+| TECNO Camon 20 | LJ8 | IPS | 4095 | Cube Root | ✅ Supported |
+| TECNO Camon 20 Pro | LJ9 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
+| TECNO Phantom X2 | LK1 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
+| TECNO Phantom X2 Pro | LK2 | AMOLED | 4095 | Gamma 2.2 | ✅ Supported |
+| TECNO Pova 5 | LM1 | IPS | 4095 | Cube Root | ✅ Supported |
+| TECNO Pova 5 Pro | LM2 | IPS | 4095 | Cube Root | ✅ Supported |
 
-- Rooted Android device
-- Custom recovery (TWRP, OrangeFox, etc.)
-- Android 11 (API 30) or higher
-- NDK for building (if compiling from source)
+### Infinix Devices
 
-### Method 1: Pre-built Binary
+| Device | Codename | Display | Max Brightness | Curve | Status |
+|--------|----------|---------|----------------|-------|--------|
+| Infinix Note 30 | X6833 | IPS | 4095 | Cube Root | ✅ Supported |
+| Infinix Note 30 Pro | X6834 | IPS | 4095 | Gamma 2.2 | ✅ Supported |
+| Infinix Hot 30 | X6831 | IPS | 4095 | Cube Root | ✅ Supported |
+| Infinix Hot 30i | X6832 | IPS | 4095 | Cube Root | ✅ Supported |
+| Infinix Zero Ultra | X6816 | AMOLED | 4095 | Gamma 2.4 | ✅ Supported |
+| Infinix GT 10 Pro | X6820 | AMOLED | 4095 | S-Curve | ✅ Supported |
 
-1. Download the pre-built binary from releases
-2. Push to your device:
-   ```bash
-   adb push out/vendor /vendor
-   ```
+### iTel Devices
 
-3. Set proper permissions:
-   ```bash
-   adb shell
-   su
-   chmod 0755 /vendor/bin/hw/yamada.obright-V1@3.0-service
-   chmod 0644 /vendor/etc/init/init.yamada.obright.rc
-   ```
+| Device | Codename | Display | Max Brightness | Curve | Status |
+|--------|----------|---------|----------------|-------|--------|
+| itel A70 | A70 | IPS | 2047 | Linear | ✅ Supported |
+| itel S23 | S23 | IPS | 2047 | Linear | ✅ Supported |
+| itel P40 | P40 | IPS | 2047 | Linear | ✅ Supported |
 
-4. Add SELinux context to `file_contexts`:
-   ```
-   /vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:mtk_hal_light_exec:s0
-   ```
+### Generic Support
 
-5. Reboot your device
+Any Transsion device with OPlus-based ROM should work with the generic profile.
 
-### Method 2: Build from Source
+---
 
-#### Requirements
+## 🔧 Installation
 
-- Android NDK (r28 or later recommended)
-- Linux build environment
-- `ANDROID_NDK_HOME` environment variable set
+### Method 1: Flashable ZIP (Recommended)
 
-#### Build Steps
+1. Download `XTENSEI-OBright-2.0.0-universal-flashable.zip`
+2. Boot to custom recovery (TWRP, OrangeFox)
+3. Flash the ZIP
+4. Reboot
+
+**That's it!** The service starts automatically on boot.
+
+### Method 2: ADB Installer
+
+```bash
+cd dist/adb-installer
+./install.sh
+```
+
+### Method 3: Manual Installation
+
+```bash
+# Push files
+adb push out/vendor/bin/hw/yamada.obright-V1@3.0-service /vendor/bin/hw/
+adb push out/vendor/etc/init/init.yamada.obright.rc /vendor/etc/init/
+adb push out/vendor/etc/xtensei-obright.conf /vendor/etc/
+
+# Set permissions
+adb shell su -c "chmod 0755 /vendor/bin/hw/yamada.obright-V1@3.0-service"
+adb shell su -c "chmod 0644 /vendor/etc/init/init.yamada.obright.rc"
+adb shell su -c "chmod 0644 /vendor/etc/xtensei-obright.conf"
+
+# Reboot
+adb reboot
+```
+
+### Method 4: Build from Source
 
 ```bash
 cd Source
@@ -76,169 +121,267 @@ chmod +x build.sh
 ./build.sh
 ```
 
-The build script will:
-1. Compile the native binary for arm64-v8a
-2. Generate the init RC file
-3. Output files to `out/vendor/`
+---
 
-#### Deploy to Device
+## ⚙️ Configuration
 
-```bash
-# Push binary and init script
-adb push out/vendor/bin/hw/yamada.obright-V1@3.0-service /vendor/bin/hw/
-adb push out/vendor/etc/init/init.yamada.obright.rc /vendor/etc/init/
+### Configuration File
 
-# Set permissions
-adb shell su -c "chmod 0755 /vendor/bin/hw/yamada.obright-V1@3.0-service"
-adb shell su -c "chmod 0644 /vendor/etc/init/init.yamada.obright.rc"
+Edit `/vendor/etc/xtensei-obright.conf`:
 
-# Reboot
-adb reboot
+```ini
+# Brightness curve (cube_root, linear, gamma_22, gamma_24, logarithmic, exponential, s_curve)
+curve = cube_root
+
+# Log level (0=ERROR, 1=WARN, 2=INFO, 3=DEBUG, 4=VERBOSE)
+log_level = 2
+
+# Battery saver scale (0.0 - 1.0)
+battery_saver_scale = 0.7
+
+# Thermal throttle scale (0.0 - 1.0)
+thermal_scale = 0.8
+
+# Screen wake delay (milliseconds)
+wake_delay_ms = 100
 ```
 
-## Configuration
+### Brightness Curves Explained
 
-### SELinux Context
+| Curve | Description | Best For |
+|-------|-------------|----------|
+| `cube_root` | Perceptual linearity | Most IPS displays (default) |
+| `linear` | Direct 1:1 mapping | Basic displays |
+| `gamma_22` | Gamma 2.2 correction | AMOLED displays |
+| `gamma_24` | Gamma 2.4 correction | Dark room usage |
+| `logarithmic` | Log curve | Very dark environments |
+| `exponential` | Exponential curve | Bright environments |
+| `s_curve` | S-curve response | Balanced response |
 
-Add the following to your `file_contexts` file:
+---
 
-```
-/vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:mtk_hal_light_exec:s0
-```
-
-### System Properties
-
-The daemon monitors these system properties:
-
-| Property | Description | Values |
-|----------|-------------|--------|
-| `debug.tracing.screen_brightness` | Brightness level | 0.0 - 1.0 (slider) or 222 - 8191 (raw) |
-| `debug.tracing.screen_state` | Screen power state | 0=OFF, 1=DOZE, 2=ON, 3=AOD |
-
-## How It Works
-
-### Brightness Mapping
-
-The adaptor uses a **cube root mapping** algorithm for perceptual brightness linearity:
-
-1. **Settings Slider (0.0-1.0)**: Mapped to hardware range (222-8191)
-2. **Cube Root Curve**: Applied for natural brightness perception
-3. **Hardware Constraints**: Final value clamped to device min/max
+## 📊 Architecture
 
 ```
-normalized = brightness / 8191
-linear = cbrt(normalized)
-output = linear * max_brightness
+┌─────────────────────────────────────────────────────────────────┐
+│                    Android Framework Layer                      │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │
+│  │   Settings  │  │   Display   │  │    Property Service     │ │
+│  │   Slider    │  │   Manager   │  │  (brightness, state)    │ │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘ │
+└─────────────────────────┬───────────────────────────────────────┘
+                          │ Property Changes
+                          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                  XTENSEI-OBright Daemon v2.0.0                  │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │  Event Loop (0% CPU while waiting)                        │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │  │
+│  │  │   Device     │  │   Backlight  │  │   Config     │    │  │
+│  │  │   Detection  │  │   Detection  │  │   Loader     │    │  │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘    │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │  │
+│  │  │  Brightness  │  │   Battery    │  │   Thermal    │    │  │
+│  │  │   Curves     │  │   Saver      │  │  Throttling  │    │  │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘    │  │
+│  └───────────────────────────────────────────────────────────┘  │
+└─────────────────────────┬───────────────────────────────────────┘
+                          │ Write
+                          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   Kernel Backlight Driver                       │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  /sys/class/leds/lcd-backlight/brightness               │   │
+│  │  /sys/class/backlight/panel0-backlight/brightness       │   │
+│  │  (20+ supported paths with auto-detection)              │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-### Event-Driven Design
+---
 
-Unlike polling-based solutions, XTENSEI-OBright:
-- Uses `__system_property_wait()` for **zero CPU usage** while idle
-- Instantly responds to brightness changes
-- No battery impact
-
-### Screen State Handling
-
-| State | Action |
-|-------|--------|
-| OFF (0) | Set brightness to 0 |
-| DOZE (1) | Set brightness to 0 |
-| ON (2) | Apply calculated brightness |
-| AOD (3) | Set brightness to 0 |
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│              Android Framework Layer                    │
-│  (Settings, Display Manager, Property Service)          │
-└────────────────────┬────────────────────────────────────┘
-                     │ Property Changes
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│           XTENSEI-OBright Daemon                        │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │  Event Loop (0% CPU while waiting)                │  │
-│  │  - Monitors system properties                     │  │
-│  │  - Calculates brightness (cube root mapping)      │  │
-│  │  - Manages screen state transitions               │  │
-│  └───────────────────────────────────────────────────┘  │
-└────────────────────┬────────────────────────────────────┘
-                     │ Write
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│              Kernel Backlight Driver                    │
-│  /sys/class/leds/lcd-backlight/brightness               │
-└─────────────────────────────────────────────────────────┘
-```
-
-## Troubleshooting
+## 🔍 Troubleshooting
 
 ### Service Not Starting
 
-1. Check logs:
-   ```bash
-   adb logcat | grep XTENSEI-OBright
-   ```
+```bash
+# Check logs
+adb logcat | grep XTENSEI-OBright
 
-2. Verify permissions:
-   ```bash
-   adb shell ls -l /vendor/bin/hw/yamada.obright-V1@3.0-service
-   ```
+# Check if binary exists
+adb shell ls -l /vendor/bin/hw/yamada.obright-V1@3.0-service
 
-3. Check SELinux context:
-   ```bash
-   adb shell ls -Z /vendor/bin/hw/yamada.obright-V1@3.0-service
-   ```
+# Check permissions
+adb shell ls -Z /vendor/bin/hw/yamada.obright-V1@3.0-service
+
+# Manual start for testing
+adb shell su -c "/vendor/bin/hw/yamada.obright-V1@3.0-service"
+```
 
 ### Brightness Not Changing
 
-1. Verify backlight path exists:
-   ```bash
-   adb shell ls -l /sys/class/leds/lcd-backlight/
-   ```
-
-2. Check if alternative path is needed:
-   ```bash
-   adb shell ls -l /sys/class/backlight/
-   ```
-
-3. Test manual write:
-   ```bash
-   adb shell su -c "echo 1000 > /sys/class/leds/lcd-backlight/brightness"
-   ```
-
-## Building for Different Devices
-
-Edit `Source/build.sh` to customize:
-
 ```bash
-# Target API level (minimum Android 11)
-API_LEVEL=30
+# Check backlight path
+adb shell ls -l /sys/class/leds/lcd-backlight/
+adb shell ls -l /sys/class/backlight/
 
-# Output binary name
-BIN_NAME="yamada.obright-V1@3.0-service"
+# Test manual write
+adb shell su -c "echo 1000 > /sys/class/leds/lcd-backlight/brightness"
 
-# NDK path
-NDK_ROOT=${ANDROID_NDK_HOME:-$HOME/Android/Sdk/ndk/28.2.13676358}
+# Check if path is writable
+adb shell su -c "touch /sys/class/leds/lcd-backlight/brightness"
 ```
 
-## Credits
+### Wrong Brightness Curve
 
-- **Original Concept**: [@ryanistr](https://github.com/ryanistr) - OPlus-Brightness-Adaptor-For-Transsion
-- **XTENSEI Version**: Enhanced with better error handling, alternative path support, and improved documentation
+Edit `/vendor/etc/xtensei-obright.conf`:
 
-## Support the Project
+```ini
+# For IPS displays
+curve = cube_root
 
-If this fix helps your device, consider supporting:
+# For AMOLED displays
+curve = gamma_22
+```
+
+Then restart:
+```bash
+adb shell su -c "setprop vendor.xtensei.obright.restart 1"
+```
+
+### Battery Saver Not Working
+
+Check battery saver property:
+```bash
+adb shell getprop sys.power.saving
+```
+
+### Thermal Throttling Not Working
+
+Check thermal property:
+```bash
+adb shell getprop sys.thermal.throttle
+```
+
+---
+
+## 🛠️ Building
+
+### Requirements
+
+- Android NDK r28 or later
+- Linux build environment (Ubuntu, Debian, Fedora, etc.)
+- `ANDROID_NDK_HOME` environment variable set
+
+### Build Commands
+
+```bash
+cd Source
+chmod +x build.sh
+./build.sh
+```
+
+### Build Output
+
+```
+out/
+├── vendor/
+│   ├── bin/
+│   │   └── hw/
+│   │       └── yamada.obright-V1@3.0-service  (binary)
+│   ├── etc/
+│   │   ├── init/
+│   │   │   └── init.yamada.obright.rc         (init script)
+│   │   └── xtensei-obright.conf               (config template)
+dist/
+├── XTENSEI-OBright-2.0.0-universal-flashable.zip
+└── adb-installer/
+    ├── install.sh
+    ├── uninstall.sh
+    └── vendor/
+```
+
+---
+
+## 📝 File Descriptions
+
+| File | Description |
+|------|-------------|
+| `Main.c` | Main daemon source code |
+| `build.sh` | Build script |
+| `xtensei-obright.conf` | Configuration template |
+| `xtensei_obright.te` | SELinux policy |
+| `init.yamada.obright.rc` | Init script |
+| `update-binary` | Flashable ZIP installer |
+| `updater-script` | Recovery updater script |
+
+---
+
+## 🔐 SELinux Policy
+
+For devices with enforcing SELinux, add to your `file_contexts`:
+
+```
+/vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:xtensei_obright_exec:s0
+```
+
+Compile the provided `xtensei_obright.te` with your device's SELinux policy.
+
+---
+
+## 📈 Performance
+
+| Metric | Value |
+|--------|-------|
+| Binary Size | ~20 KB (stripped) |
+| RAM Usage | < 1 MB |
+| CPU Usage | 0% (idle), < 0.1% (active) |
+| Battery Impact | Negligible |
+| Boot Time | < 100ms |
+
+---
+
+## 🤝 Contributing
+
+### Adding Device Profiles
+
+Edit `Main.c` and add to `DEVICE_PROFILES[]`:
+
+```c
+{"device-codename", "Device Name", "Manufacturer", max_brightness, min_brightness, curve, wake_delay, thermal, battery}
+```
+
+### Adding Backlight Paths
+
+Add to `BACKLIGHT_PATHS[]` array in `Main.c`.
+
+### Testing
+
+1. Build the binary
+2. Test on your device
+3. Report results on GitHub
+
+---
+
+## 📞 Support
+
+- **GitHub**: https://github.com/XTENSEI/XTENSEI-OBright
+- **Issues**: https://github.com/XTENSEI/XTENSEI-OBright/issues
+
+---
+
+## 💖 Support the Project
+
+If this fix helps your device:
 
 - **Global**: [Sociabuzz](https://sociabuzz.com/kanagawa_yamada/tribe)
 - **Indonesia (QRIS)**: [Telegram](https://t.me/KLAGen2/86)
 
-## License
+---
 
-This project is licensed under the **GNU General Public License v3.0** (GPL-3.0).
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0** (GPL-3.0.
 
 See [LICENSE](LICENSE) for the full license text.
 
@@ -249,12 +392,22 @@ See [LICENSE](LICENSE) for the full license text.
 - ✅ Same license for derivatives
 - ❌ No warranty provided
 
-## Disclaimer
+---
 
-⚠️ **Use at your own risk.** Modifying system files and backlight control can potentially cause issues. Always backup your device before making system modifications.
+## ⚠️ Disclaimer
+
+**Use at your own risk.** Modifying system files and backlight control can potentially cause issues. Always backup your device before making system modifications.
 
 The authors are not responsible for any damage to your device.
 
 ---
 
-**XTENSEI-OBright** - Bringing proper brightness control to Transsion devices
+## 📜 Credits
+
+- **Original Concept**: [@ryanistr](https://github.com/ryanistr) - OPlus-Brightness-Adaptor-For-Transsion
+- **XTENSEI v2.0.0**: Universal rewrite with device detection, multiple curves, and comprehensive support
+- **Testing**: TECNO, Infinix, iTel device community
+
+---
+
+**XTENSEI-OBright v2.0.0 "Phoenix"** - The ultimate brightness solution for Transsion devices

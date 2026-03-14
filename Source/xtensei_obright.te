@@ -1,0 +1,87 @@
+# SELinux Policy for XTENSEI-OBright
+# Universal OPlus Brightness Adaptor for Transsion Devices
+#
+# Copyright (C) 2026 XTENSEI <andriegalutera@gmail.com>
+# Licensed under GPL-3.0
+#
+# This file defines the SELinux policy for the XTENSEI-OBright service.
+# It should be compiled and loaded as part of your device's SELinux policy.
+#
+# Usage:
+# 1. Copy this file to your device's SELinux policy directory
+# 2. Add to file_contexts: /vendor/bin/hw/yamada\.obright-V1@3\.0-service    u:object_r:xtensei_obright_exec:s0
+# 3. Rebuild and flash your boot image
+
+# =============================================================================
+# Type Declaration
+# =============================================================================
+type xtensei_obright, domain;
+type xtensei_obright_exec, exec_type, vendor_file_type, file_type;
+
+# =============================================================================
+# File Contexts
+# =============================================================================
+# Allow reading and writing to backlight sysfs nodes
+allow xtensei_obright sysfs_backlight:file { read write open getattr setattr };
+allow xtensei_obright sysfs_leds:file { read write open getattr setattr };
+
+# Allow reading configuration files
+allow xtensei_obright vendor_configs_file:file { read open getattr };
+allow xtensei_obright system_file:file { read open getattr };
+
+# Allow logging
+allow xtensei_obright kernel:system { syslog_read };
+allow xtensei_obright logd:unix_dgram_socket { sendto };
+allow xtensei_obright logd_socket:sock_file { write };
+
+# Allow property access
+allow xtensei_obright system_prop:property_service { set };
+allow xtensei_obright vendor_prop:property_service { set };
+
+# =============================================================================
+# Process Permissions
+# =============================================================================
+# Allow the service to run as a daemon
+allow xtensei_obright init:unix_stream_socket { connectto };
+allow xtensei_obright init:fd { use };
+
+# Allow signal handling
+allow xtensei_obright self:signal { send };
+
+# =============================================================================
+# Capabilities
+# =============================================================================
+# Required capabilities for brightness control
+allow xtensei_obright self:capability { sys_nice sys_time };
+
+# =============================================================================
+# Binder Communication
+# =============================================================================
+# If the service needs to communicate with other services via binder
+# (Currently not required for basic operation)
+# allow xtensei_obright servicemanager:binder { call };
+
+# =============================================================================
+# File System Access
+# =============================================================================
+# Allow reading from /sys/class/leds and /sys/class/backlight
+allow xtensei_obright sysfs:file { read open getattr };
+allow xtensei_obright sysfs_leds:dir { read open search getattr };
+allow xtensei_obright sysfs_backlight:dir { read open search getattr };
+
+# =============================================================================
+# Domain Transition
+# =============================================================================
+# Allow init to transition to xtensei_obright domain
+init_daemon_domain(xtensei_obright, xtensei_obright_exec)
+
+# =============================================================================
+# Additional Rules (if needed for specific devices)
+# =============================================================================
+# Some devices may require additional permissions. Add as needed:
+#
+# For thermal throttling support:
+# allow xtensei_obright thermal_sysfs:file { read open getattr };
+#
+# For battery saver integration:
+# allow xtensei_obright battery_data_file:file { read open getattr };

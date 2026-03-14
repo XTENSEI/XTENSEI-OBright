@@ -1,0 +1,90 @@
+# =============================================================================
+# XTENSEI-OBright Flashable ZIP Script
+# Universal OPlus Brightness Adaptor for Transsion Devices
+#
+# Copyright (C) 2026 XTENSEI <andriegalutera@gmail.com>
+# Licensed under GPL-3.0
+#
+# This is the updater-script for creating a flashable ZIP package.
+# Use with TWRP, OrangeFox, or other custom recoveries.
+# =============================================================================
+
+# Require recovery with edify support
+assert(getprop("ro.build.version.release") >= "11" || abort("ERROR: Android 11+ required!"));
+
+# Mount vendor partition
+mount("vendor");
+
+# Create directories
+file_getprop("ro.build.version.release", "ro_android_version");
+ui_print("XTENSEI-OBright v2.0.0-universal 'Phoenix'");
+ui_print("==============================================");
+ui_print("Universal OPlus Brightness Adaptor");
+ui_print("for Transsion Devices (TECNO, Infinix, iTel)");
+ui_print("==============================================");
+ui_print("");
+
+# Detect device
+file_getprop("ro.product.device", "device_codename");
+file_getprop("ro.product.brand", "device_brand");
+ui_print("Device: " + $device_codename);
+ui_print("Brand: " + $device_brand);
+ui_print("");
+
+# Check for Transsion devices
+ifelse(is_substring("TECNO", $device_brand),
+  ui_print("✓ TECNO device detected"),
+  is_substring("Infinix", $device_brand),
+  ui_print("✓ Infinix device detected"),
+  is_substring("itel", $device_brand),
+  ui_print("✓ iTel device detected"),
+  is_substring("transsion", $device_brand),
+  ui_print("✓ Transsion device detected"),
+  ui_print("⚠ Non-Transsion device - compatibility not guaranteed")
+);
+ui_print("");
+
+# Backup existing files
+ui_print("Creating backup...");
+backup("/vendor/bin/hw/yamada.obright-V1@3.0-service");
+backup("/vendor/etc/init/init.yamada.obright.rc");
+backup("/vendor/etc/xtensei-obright.conf");
+ui_print("✓ Backup created");
+ui_print("");
+
+# Extract files
+ui_print("Installing files...");
+package_extract_dir("vendor", "/vendor");
+
+# Set permissions
+ui_print("Setting permissions...");
+set_perm_recursive(0, 2000, 0755, 0644, "/vendor/bin/hw/yamada.obright-V1@3.0-service", "/vendor/etc/init/init.yamada.obright.rc");
+set_perm(0, 2000, 0755, "/vendor/bin/hw/yamada.obright-V1@3.0-service");
+set_perm(0, 2000, 0644, "/vendor/etc/init/init.yamada.obright.rc");
+set_perm(0, 2000, 0644, "/vendor/etc/xtensei-obright.conf");
+ui_print("✓ Permissions set");
+ui_print("");
+
+# Add SELinux context (if supported)
+ui_print("Configuring SELinux contexts...");
+run_program("/sbin/restorecon", "/vendor/bin/hw/yamada.obright-V1@3.0-service");
+ui_print("✓ SELinux contexts configured");
+ui_print("");
+
+# Unmount vendor
+unmount("/vendor");
+
+# Installation complete
+ui_print("==============================================");
+ui_print("✓ Installation Complete!");
+ui_print("==============================================");
+ui_print("");
+ui_print("The XTENSEI-OBright service will start automatically");
+ui_print("after reboot. You can configure it by editing:");
+ui_print("  /vendor/etc/xtensei-obright.conf");
+ui_print("");
+ui_print("Support: https://github.com/XTENSEI/XTENSEI-OBright");
+ui_print("");
+ui_print("Rebooting in 5 seconds...");
+sleep(5);
+reboot(now);

@@ -1,6 +1,7 @@
 # Build Output
 Source/out/
 out/
+dist/
 *.o
 *.a
 *.so
@@ -24,3 +25,17 @@ out/
 # Temporary Files
 *.tmp
 *.temp
+
+# Build Artifacts
+*.zip
+*.tar
+*.gz
+
+# Test Files
+test_*.c
+*_test.c
+
+# Debug Files
+*.dSYM/
+*.pdb
+*.ilk

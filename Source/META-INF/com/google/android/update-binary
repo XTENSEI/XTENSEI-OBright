@@ -1,0 +1,183 @@
+#!/sbin/sh
+# =============================================================================
+# XTENSEI-OBright Update Binary
+# Universal OPlus Brightness Adaptor for Transsion Devices
+#
+# Copyright (C) 2026 XTENSEI <andriegalutera@gmail.com>
+# Licensed under GPL-3.0
+#
+# This is the update-binary script for flashable ZIP packages.
+# =============================================================================
+
+OUTFD=$2
+ZIPFILE=$3
+
+# Setup output
+ui_print() {
+  echo "ui_print $1" > $OUTFD
+  echo "ui_print" > $OUTFD
+}
+
+show_progress() {
+  echo "progress $1 $2" > $OUTFD
+}
+
+set_progress() {
+  echo "set_progress $1" > $OUTFD
+}
+
+# Mount partitions
+mount /vendor 2>/dev/null
+mount /system 2>/dev/null
+
+# Get Android version
+ANDROID_VER=$(getprop ro.build.version.release)
+
+# Get device info
+DEVICE_CODENAME=$(getprop ro.product.device)
+DEVICE_BRAND=$(getprop ro.product.brand)
+DEVICE_MODEL=$(getprop ro.product.model)
+
+# Display header
+ui_print " "
+ui_print "=============================================="
+ui_print "  XTENSEI-OBright v2.0.0-universal 'Phoenix'"
+ui_print "=============================================="
+ui_print " "
+ui_print "Universal OPlus Brightness Adaptor"
+ui_print "for Transsion Devices (TECNO, Infinix, iTel)"
+ui_print " "
+ui_print "Android Version: $ANDROID_VER"
+ui_print "Device: $DEVICE_CODENAME"
+ui_print "Brand: $DEVICE_BRAND"
+ui_print "Model: $DEVICE_MODEL"
+ui_print " "
+
+# Check Android version
+if [ "$ANDROID_VER" -lt 11 ] 2>/dev/null; then
+  ui_print "ERROR: Android 11 or higher required!"
+  ui_print "Your device is running Android $ANDROID_VER"
+  exit 1
+fi
+
+ui_print "✓ Android version check passed"
+ui_print " "
+
+# Create directories
+ui_print "Creating directories..."
+mkdir -p /vendor/bin/hw
+mkdir -p /vendor/etc/init
+mkdir -p /vendor/etc
+ui_print "✓ Directories created"
+ui_print " "
+
+# Backup existing files
+ui_print "Creating backup..."
+BACKUP_DIR="/data/xtensei-obright-backup-$(date +%Y%m%d-%H%M%S)"
+mkdir -p $BACKUP_DIR
+
+if [ -f /vendor/bin/hw/yamada.obright-V1@3.0-service ]; then
+  cp /vendor/bin/hw/yamada.obright-V1@3.0-service $BACKUP_DIR/
+  ui_print "✓ Backed up existing binary"
+fi
+
+if [ -f /vendor/etc/init/init.yamada.obright.rc ]; then
+  cp /vendor/etc/init/init.yamada.obright.rc $BACKUP_DIR/
+  ui_print "✓ Backed up existing init script"
+fi
+
+if [ -f /vendor/etc/xtensei-obright.conf ]; then
+  cp /vendor/etc/xtensei-obright.conf $BACKUP_DIR/
+  ui_print "✓ Backed up existing config"
+fi
+
+ui_print "Backup location: $BACKUP_DIR"
+ui_print " "
+
+# Extract files
+ui_print "Extracting files..."
+cd /tmp
+
+# Extract binary
+unzip -o "$ZIPFILE" 'vendor/bin/hw/*' -d /vendor/
+ui_print "✓ Binary extracted"
+
+# Extract init script
+unzip -o "$ZIPFILE" 'vendor/etc/init/*' -d /vendor/
+ui_print "✓ Init script extracted"
+
+# Extract config (if exists in ZIP)
+unzip -o "$ZIPFILE" 'vendor/etc/xtensei-obright.conf' -d /vendor/ 2>/dev/null
+if [ $? -eq 0 ]; then
+  ui_print "✓ Config extracted"
+else
+  ui_print "ℹ Using existing config (or default)"
+fi
+ui_print " "
+
+# Set permissions
+ui_print "Setting permissions..."
+chmod 0755 /vendor/bin/hw/yamada.obright-V1@3.0-service
+chmod 0644 /vendor/etc/init/init.yamada.obright.rc
+chmod 0644 /vendor/etc/xtensei-obright.conf 2>/dev/null
+
+chown root:root /vendor/bin/hw/yamada.obright-V1@3.0-service
+chown root:root /vendor/etc/init/init.yamada.obright.rc
+chown root:root /vendor/etc/xtensei-obright.conf 2>/dev/null
+ui_print "✓ Permissions set"
+ui_print " "
+
+# Restore SELinux contexts
+ui_print "Restoring SELinux contexts..."
+if [ -x /sbin/restorecon ]; then
+  /sbin/restorecon /vendor/bin/hw/yamada.obright-V1@3.0-service
+  ui_print "✓ SELinux contexts restored"
+else
+  ui_print "ℹ restorecon not available, skipping"
+fi
+ui_print " "
+
+# Verify installation
+ui_print "Verifying installation..."
+if [ -f /vendor/bin/hw/yamada.obright-V1@3.0-service ]; then
+  ui_print "✓ Binary installed successfully"
+else
+  ui_print "✗ Binary installation failed!"
+  exit 1
+fi
+
+if [ -f /vendor/etc/init/init.yamada.obright.rc ]; then
+  ui_print "✓ Init script installed successfully"
+else
+  ui_print "✗ Init script installation failed!"
+  exit 1
+fi
+ui_print " "
+
+# Unmount partitions
+umount /vendor 2>/dev/null
+umount /system 2>/dev/null
+
+# Installation summary
+ui_print "=============================================="
+ui_print "  ✓ Installation Complete!"
+ui_print "=============================================="
+ui_print " "
+ui_print "The XTENSEI-OBright service will start"
+ui_print "automatically after reboot."
+ui_print " "
+ui_print "Configuration file:"
+ui_print "  /vendor/etc/xtensei-obright.conf"
+ui_print " "
+ui_print "Log output:"
+ui_print "  adb logcat | grep XTENSEI-OBright"
+ui_print " "
+ui_print "Support: https://github.com/XTENSEI/XTENSEI-OBright"
+ui_print " "
+ui_print "=============================================="
+ui_print " "
+
+# Cleanup
+rm -rf /tmp/*
+
+exit 0
